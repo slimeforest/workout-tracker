@@ -62,6 +62,17 @@ app.post("/api/workouts", (req, res) => {
 		});
 });
 
+app.get("/api/workouts/range", (req, res) => {
+	db.Workout.find({}, null, { sort: { day: 1 } })
+		.populate("exercises")
+		.then((dbWorkout) => {
+			res.json(dbWorkout);
+		})
+		.catch((err) => {
+			res.json(err);
+		});
+});
+
 app.listen(PORT, () => {
 	console.log(`App running on port ${PORT}!`);
 });
